@@ -54,6 +54,7 @@ public class TagServiceImpl implements TagService {
             if (optional.isPresent()) {
                 list.add(optional.get());
             } else {
+                //不存在就新增
                 Tag t = new Tag();
                 t.setName(id.toString());
                 Tag newTag = tagRepository.save(t);
