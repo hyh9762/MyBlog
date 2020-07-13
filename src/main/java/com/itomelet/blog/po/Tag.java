@@ -1,5 +1,7 @@
 package com.itomelet.blog.po;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,7 @@ public class Tag {
     }
 
     @ManyToMany(mappedBy = "tags")
+    @JsonIgnore
     private List<Blog> blogs = new ArrayList<>();
 
 

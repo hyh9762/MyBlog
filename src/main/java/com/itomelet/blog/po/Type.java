@@ -1,6 +1,8 @@
 package com.itomelet.blog.po;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ public class Type {
     private String name;
 
     @OneToMany(mappedBy = "type")  //被维护
+    @JsonIgnore
     private List<Blog> blogs = new ArrayList<>();
 
     public Type() {

@@ -1,5 +1,7 @@
 package com.itomelet.blog.po;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +21,7 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdTime;
     @ManyToOne
+    @JsonIgnore
     private Blog blog;
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
     private List<Comment> replyComments = new ArrayList<>();

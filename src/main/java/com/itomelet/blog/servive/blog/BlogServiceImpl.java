@@ -106,6 +106,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public Page<Blog> listAllInAdmin(Pageable pageable) {
+        return blogRepository.findAllInAdmin(pageable);
+    }
+
+    @Override
     public Page<Blog> listByTag(Long tagId, Pageable pageable) {
         return blogRepository.findAll(new Specification<Blog>() {
             @Override

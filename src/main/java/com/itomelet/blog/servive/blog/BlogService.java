@@ -18,6 +18,8 @@ public interface BlogService {
 
     Page<Blog> listAll(Pageable pageable);
 
+    Page<Blog> listAllInAdmin(Pageable pageable);
+
     Page<Blog> listByTag(Long tagId, Pageable pageable);
 
     Page<Blog> listByType(Long typeId, Pageable pageable);

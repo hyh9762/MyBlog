@@ -14,8 +14,8 @@ public class Blog {
     @GeneratedValue
     private Long id;
     private String title;
-    @Basic(fetch = FetchType.LAZY)
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private String content;
     private String firstPicture;
     private String flag;
@@ -51,6 +51,15 @@ public class Blog {
     public Blog() {
     }
 
+    public Blog(Long id, String title, String firstPicture, Integer views, Boolean published, Type type, Date createTime) {
+        this.id = id;
+        this.title = title;
+        this.firstPicture = firstPicture;
+        this.views = views;
+        this.published = published;
+        this.type = type;
+        this.createTime = createTime;
+    }
 
     public void init() {
         this.tagIds = tagsToIds(this.tags);

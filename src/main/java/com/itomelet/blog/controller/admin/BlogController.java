@@ -8,15 +8,14 @@ import com.itomelet.blog.servive.type.TypeService;
 import com.itomelet.blog.vo.BlogQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -49,10 +48,21 @@ public class BlogController {
      */
     @RequestMapping("/blogs")
     public String blogs(Model model, @PageableDefault(size = 10, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        model.addAttribute("page", blogService.listAll(pageable));
+        /*model.addAttribute("page", blogService.listAll(pageable));
         model.addAttribute("types", typeService.listTypesTop(6));
-        model.addAttribute("tags", tagService.listTagsTop(10));
+        model.addAttribute("tags", tagService.listTagsTop(10));*/
         return LIST;
+    }
+
+
+    @PostMapping("/blogs/list")
+    public @ResponseBody
+    Page<Blog> listBlogs(Integer page, Integer limit) {
+        page = page == null || page < 0 ? 0 : page - 1;
+        Sort sort = Sort.by(Sort.Direction.DESC, "updateTime");
+        Page<Blog> blogs = blogService.listAllInAdmin(PageRequest.of(page, limit, sort));
+        System.out.println(blogs);
+        return blogService.listAllInAdmin(PageRequest.of(page, limit, sort));
     }
 
 

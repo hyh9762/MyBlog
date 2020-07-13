@@ -2,14 +2,22 @@ $(function () {
     $("#jqGrid").jqGrid({
         url: '/admin/blogs/list',
         datatype: "json",
+        mtype: "POST",
         colModel: [
-            {label: 'id', name: 'pageBlogId', index: 'blogId', width: 50, key: true, hidden: true},
-            {label: '标题', name: 'blogTitle', index: 'blogTitle', width: 140},
-            {label: '预览图', name: 'blogCoverImage', index: 'blogCoverImage', width: 120, formatter: coverImageFormatter},
-            {label: '浏览量', name: 'blogViews', index: 'blogViews', width: 60},
-            {label: '状态', name: 'blogStatus', index: 'blogStatus', width: 60, formatter: statusFormatter},
-            {label: '博客分类', name: 'blogCategoryName', index: 'blogCategoryName', width: 60},
-            {label: '添加时间', name: 'createTime', index: 'createTime', width: 90}
+            {label: 'id', name: 'id', index: 'id', width: 50, key: true, hidden: true},
+            {label: '标题', name: 'title', index: 'title', width: 140},
+            {label: '预览图', name: 'firstPicture', index: 'firstPicture', width: 120, formatter: coverImageFormatter},
+            {label: '浏览量', name: 'views', index: 'views', width: 60},
+            {label: '状态', name: 'published', index: 'published', width: 60, formatter: statusFormatter},
+            {label: '博客分类', name: 'type.name', index: 'type.name', width: 60},
+            {
+                label: '添加时间',
+                name: 'createTime',
+                index: 'createTime',
+                width: 90,
+                formatter: 'date',
+                formatoptions: {srcformat: 'Y-m-d H:i', newformat: 'Y-m-d H:i'}
+            }
         ],
         height: 700,
         rowNum: 10,
@@ -22,10 +30,10 @@ $(function () {
         multiselect: true,
         pager: "#jqGridPager",
         jsonReader: {
-            root: "data.list",
-            page: "data.currPage",
-            total: "data.totalPage",
-            records: "data.totalCount"
+            root: "content",
+            page: "number+1",
+            total: "totalPages",
+            records: "totalElements"
         },
         prmNames: {
             page: "page",
@@ -47,12 +55,17 @@ $(function () {
     }
 
     function statusFormatter(cellvalue) {
-        if (cellvalue == 0) {
+        if (cellvalue == false) {
             return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 50%;\">草稿</button>";
-        } else if (cellvalue == 1) {
+        } else if (cellvalue == true) {
             return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 50%;\">发布</button>";
         }
     }
+
+    function createTimeFormatter(cellvalue) {
+        return cellvalue.format('yyyy-MM-dd');
+    }
+
 
 });
 
