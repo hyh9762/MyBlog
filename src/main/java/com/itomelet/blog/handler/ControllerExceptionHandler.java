@@ -16,7 +16,7 @@ public class ControllerExceptionHandler {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    //标识这个方法是做异常处理的
+    //标识这个方法是做异常处理的- -
     @ExceptionHandler(Exception.class) //表示拦截所有异常
     public ModelAndView exceptionHandler(HttpServletRequest request, Exception e) throws Exception {
         logger.error("Request URL : {} , Exception:{}", request.getRequestURL(), e.toString());
