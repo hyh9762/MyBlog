@@ -12,4 +12,6 @@ public interface CommentService {
     Comment saveComment(Comment comment);
 
     void deleteComment(Long id);
+
+    Long getTotalComments();
 }

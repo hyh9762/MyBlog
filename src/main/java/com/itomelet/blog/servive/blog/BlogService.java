@@ -37,4 +37,6 @@ public interface BlogService {
     void deleteBlog(Long id);
 
     Page<Blog> searchBlogs(String query, Pageable pageable);
+
+    Long getTotalBlogs();
 }

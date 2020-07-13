@@ -55,6 +55,11 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.deleteById(id);
     }
 
+    @Override
+    public Long getTotalComments() {
+        return commentRepository.count();
+    }
+
     /**
      * 循环每个顶级的评论节点
      *

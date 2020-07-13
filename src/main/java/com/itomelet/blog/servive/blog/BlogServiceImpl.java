@@ -96,6 +96,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public Long getTotalBlogs() {
+        return blogRepository.count();
+    }
+
+    @Override
     public Page<Blog> listAll(Pageable pageable) {
         return blogRepository.findAll(pageable);
     }

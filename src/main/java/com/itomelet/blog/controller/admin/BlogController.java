@@ -30,7 +30,7 @@ import java.util.UUID;
 public class BlogController {
 
     private static final String INPUT = "admin/blogs-input";
-    private static final String LIST = "admin/blogs";
+    private static final String LIST = "admin/blog";
     private static final String REDIRECT_LIST = "redirect:/admin/blogs";
 
     @Autowired
@@ -42,6 +42,11 @@ public class BlogController {
     @Value("${file.uploadPath}")
     private String filePath;
 
+    /**
+     * @param model
+     * @param pageable
+     * @return 博客管理页面
+     */
     @RequestMapping("/blogs")
     public String blogs(Model model, @PageableDefault(size = 10, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable) {
         model.addAttribute("page", blogService.listAll(pageable));

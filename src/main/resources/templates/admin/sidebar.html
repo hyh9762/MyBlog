@@ -1,3 +1,4 @@
+<!--侧边栏-->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <aside th:fragment="sidebar-fragment(path)" class="main-sidebar sidebar-dark-primary elevation-4">
@@ -71,14 +72,6 @@
                             <i class="fa fa-tags nav-icon" aria-hidden="true"></i>
                             <p>
                                 标签管理
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/admin/links}" th:class="${path}=='links'?'nav-link active':'nav-link'">
-                            <i class="fa fa-heart nav-icon" aria-hidden="true"></i>
-                            <p>
-                                友情链接
                             </p>
                         </a>
                     </li>

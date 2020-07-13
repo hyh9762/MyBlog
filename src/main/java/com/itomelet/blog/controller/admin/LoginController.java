@@ -1,9 +1,14 @@
 package com.itomelet.blog.controller.admin;
 
 import com.itomelet.blog.po.User;
+import com.itomelet.blog.servive.blog.BlogService;
+import com.itomelet.blog.servive.comment.CommentService;
+import com.itomelet.blog.servive.tag.TagService;
+import com.itomelet.blog.servive.type.TypeService;
 import com.itomelet.blog.servive.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +24,15 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private TypeService typeService;
+    @Autowired
+    private BlogService blogService;
+    @Autowired
+    private TagService tagService;
+    @Autowired
+    private CommentService commentService;
+
 
     @GetMapping()
     public String loginPage() {
@@ -26,7 +40,11 @@ public class LoginController {
     }
 
     @GetMapping("/index")
-    public String indexPage() {
+    public String indexPage(Model model) {
+        model.addAttribute("categoryCount", typeService.getTotalCategories());
+        model.addAttribute("blogCount", blogService.getTotalBlogs());
+        model.addAttribute("tagCount", tagService.getTotalTags());
+        model.addAttribute("commentCount", commentService.getTotalComments());
         return "admin/index";
     }
 
