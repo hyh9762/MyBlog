@@ -183,13 +183,20 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     @Transactional
-    public void deleteBlog(Long id) {
-        //删除首图
-        String firstPicture = blogRepository.getOne(id).getFirstPicture();
-        deleteOldFirstPicture(firstPicture);
-        commentRepository.deleteByBlogId(id);
-        blogRepository.deleteById(id);
-
+    public Boolean deleteBlog(Integer[] ids) {
+        try {
+            for (Integer id : ids) {
+                //删除首图
+                String firstPicture = blogRepository.getOne(Long.valueOf(id)).getFirstPicture();
+                deleteOldFirstPicture(firstPicture);
+                commentRepository.deleteByBlogId(Long.valueOf(id));
+                blogRepository.deleteById(Long.valueOf(id));
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private void deleteOldFirstPicture(String firstPicture) {

@@ -134,13 +134,13 @@ function deleteBlog() {
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function (r) {
-                        if (r.resultCode == 200) {
+                        if (r) {
                             swal("删除成功", {
                                 icon: "success",
                             });
                             $("#jqGrid").trigger("reloadGrid");
                         } else {
-                            swal(r.message, {
+                            swal("删除失败", {
                                 icon: "error",
                             });
                         }

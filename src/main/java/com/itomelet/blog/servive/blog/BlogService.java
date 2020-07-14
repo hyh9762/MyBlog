@@ -36,7 +36,7 @@ public interface BlogService {
 
     List<Blog> listRecommendBlogTop(Integer size);
 
-    void deleteBlog(Long id);
+    Boolean deleteBlog(Integer[] ids);
 
     Page<Blog> searchBlogs(String query, Pageable pageable);
 
