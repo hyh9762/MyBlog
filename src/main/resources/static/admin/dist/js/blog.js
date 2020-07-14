@@ -2,7 +2,6 @@ $(function () {
     $("#jqGrid").jqGrid({
         url: '/admin/blogs/list',
         datatype: "json",
-        mtype: "POST",
         colModel: [
             {label: 'id', name: 'id', index: 'id', width: 50, key: true, hidden: true},
             {label: '标题', name: 'title', index: 'title', width: 140},
@@ -24,6 +23,9 @@ $(function () {
         rowList: [10, 20, 50],
         styleUI: 'Bootstrap',
         loadtext: '信息读取中...',
+        sortable: true,
+        sortname: 'updateTime',
+        sortorder: 'desc',
         rownumbers: false,
         rownumWidth: 20,
         autowidth: true,

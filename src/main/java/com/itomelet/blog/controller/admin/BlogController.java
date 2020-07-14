@@ -41,27 +41,41 @@ public class BlogController {
     @Value("${file.uploadPath}")
     private String filePath;
 
+
     /**
-     * @param model
-     * @param pageable
-     * @return 博客管理页面
+     * 博客管理页面映射
+     *
+     * @return
      */
     @RequestMapping("/blogs")
-    public String blogs(Model model, @PageableDefault(size = 10, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable) {
+    public String blogs() {
         /*model.addAttribute("page", blogService.listAll(pageable));
         model.addAttribute("types", typeService.listTypesTop(6));
         model.addAttribute("tags", tagService.listTagsTop(10));*/
         return LIST;
     }
 
-
-    @PostMapping("/blogs/list")
+    /**
+     * 博客管理页面数据展示
+     *
+     * @param page  页码
+     * @param limit 分页条数
+     * @param sidx  排序条件
+     * @param order 排序规则
+     * @return
+     */
+    @GetMapping("/blogs/list")
     public @ResponseBody
-    Page<Blog> listBlogs(Integer page, Integer limit) {
+    Page<Blog> listBlogs(Integer page, Integer limit, String sidx, String order) {
         page = page == null || page < 0 ? 0 : page - 1;
-        Sort sort = Sort.by(Sort.Direction.DESC, "updateTime");
-        Page<Blog> blogs = blogService.listAllInAdmin(PageRequest.of(page, limit, sort));
-        System.out.println(blogs);
+        sidx = sidx == null ? "updateTime" : sidx;
+        order = order == null ? "desc" : order;
+        Sort sort;
+        if (order.equals("desc")) {
+            sort = Sort.by(Sort.Direction.DESC, sidx);
+        } else {
+            sort = Sort.by(Sort.Direction.ASC, sidx);
+        }
         return blogService.listAllInAdmin(PageRequest.of(page, limit, sort));
     }
 
