@@ -66,17 +66,18 @@ public class BlogController {
      */
     @GetMapping("/blogs/list")
     public @ResponseBody
-    Page<Blog> listBlogs(Integer page, Integer limit, String sidx, String order) {
+    Page<Blog> listBlogs(Integer page, Integer limit, String sidx, String order, String keyword) {
         page = page == null || page < 0 ? 0 : page - 1;
         sidx = sidx == null ? "updateTime" : sidx;
         order = order == null ? "desc" : order;
+        keyword = keyword == null ? "" : keyword;
         Sort sort;
         if (order.equals("desc")) {
             sort = Sort.by(Sort.Direction.DESC, sidx);
         } else {
             sort = Sort.by(Sort.Direction.ASC, sidx);
         }
-        return blogService.listAllInAdmin(PageRequest.of(page, limit, sort));
+        return blogService.listBlogsInAdmin(PageRequest.of(page, limit, sort), keyword);
     }
 
 

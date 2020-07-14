@@ -19,8 +19,8 @@ $(function () {
             }
         ],
         height: 700,
-        rowNum: 10,
-        rowList: [10, 20, 50],
+        rowNum: 5,
+        rowList: [5, 10, 20, 50],
         styleUI: 'Bootstrap',
         loadtext: '信息读取中...',
         sortable: true,

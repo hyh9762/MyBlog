@@ -18,7 +18,7 @@ public interface BlogService {
 
     Page<Blog> listAll(Pageable pageable);
 
-    Page<Blog> listAllInAdmin(Pageable pageable);
+    Page<Blog> listBlogsInAdmin(Pageable pageable, String keyword);
 
     Page<Blog> listByTag(Long tagId, Pageable pageable);
 

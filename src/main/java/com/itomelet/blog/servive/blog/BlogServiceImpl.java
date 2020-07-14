@@ -106,8 +106,8 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Page<Blog> listAllInAdmin(Pageable pageable) {
-        return blogRepository.findAllInAdmin(pageable);
+    public Page<Blog> listBlogsInAdmin(Pageable pageable, String keyword) {
+        return blogRepository.listBlogsInAdmin(pageable, "%" + keyword + "%");
     }
 
     @Override
