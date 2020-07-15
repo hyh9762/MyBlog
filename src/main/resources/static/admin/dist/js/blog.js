@@ -104,7 +104,7 @@ function reload() {
 }
 
 function addBlog() {
-    window.location.href = "/admin/blogs/edit";
+    window.location.href = "/admin/blogs/edit/-1";
 }
 
 function editBlog() {

@@ -46,17 +46,19 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> listTags(String ids) {
-        List<Long> idArray = convertToList(ids);
+    public List<Tag> listTags(String[] ids) {
+        if (ids == null || ids.length == 0) {
+            return null;
+        }
         List<Tag> list = new ArrayList<>();
-        for (Long id : idArray) {
-            Optional<Tag> optional = tagRepository.findById(id);
+        for (String id : ids) {
+            Optional<Tag> optional = tagRepository.findById(Long.valueOf(id));
             if (optional.isPresent()) {
                 list.add(optional.get());
             } else {
                 //不存在就新增
                 Tag t = new Tag();
-                t.setName(id.toString());
+                t.setName(id);
                 Tag newTag = tagRepository.save(t);
                 list.add(newTag);
             }
@@ -64,7 +66,7 @@ public class TagServiceImpl implements TagService {
         return list;
     }
 
-    private List<Long> convertToList(String ids) {
+    /*private List<Long> convertToList(String ids) {
         List<Long> list = new ArrayList<>();
         if (!"".equals(ids) && ids != null) {
             String[] idArray = ids.split(",");
@@ -83,7 +85,7 @@ public class TagServiceImpl implements TagService {
             }
         }
         return list;
-    }
+    }*/
 
 
     @Override

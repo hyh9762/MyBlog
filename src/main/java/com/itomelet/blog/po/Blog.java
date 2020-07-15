@@ -1,6 +1,6 @@
 package com.itomelet.blog.po;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,15 +26,16 @@ public class Blog {
     private boolean published;
     private boolean recommend; //是否推荐
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
     private String description;
+    private String subUrl;
 
     @Transient
-    private String tagIds;
+    private String[] tagIds;
 
     @ManyToOne
     private User user;
@@ -61,13 +62,13 @@ public class Blog {
         this.createTime = createTime;
     }
 
-    public void init() {
+    /*public void init() {
         this.tagIds = tagsToIds(this.tags);
     }
 
-
-    private String tagsToIds(List<Tag> tags) {
+      private String[] tagsToIds(List<Tag> tags) {
         if (!tags.isEmpty()) {
+
             StringBuffer ids = new StringBuffer();
             boolean flag = false;
             for (Tag tag : tags) {
@@ -82,6 +83,14 @@ public class Blog {
         } else {
             return tagIds;
         }
+    }*/
+
+    public String getSubUrl() {
+        return subUrl;
+    }
+
+    public void setSubUrl(String subUrl) {
+        this.subUrl = subUrl;
     }
 
     public String getDescription() {
@@ -92,11 +101,11 @@ public class Blog {
         this.description = description;
     }
 
-    public String getTagIds() {
+    public String[] getTagIds() {
         return tagIds;
     }
 
-    public void setTagIds(String tagIds) {
+    public void setTagIds(String[] tagIds) {
         this.tagIds = tagIds;
     }
 

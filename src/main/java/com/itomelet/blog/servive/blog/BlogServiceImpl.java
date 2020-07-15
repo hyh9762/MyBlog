@@ -10,6 +10,7 @@ import com.itomelet.blog.util.MyBeanUtils;
 import com.itomelet.blog.vo.BlogQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +32,9 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Value("${file.uploadDic}")
+    private String fileUploadDic;
 
     @Override
     public Blog getBlog(Long id) {
@@ -152,23 +156,25 @@ public class BlogServiceImpl implements BlogService {
     @Override
     @Transactional
     public Blog saveBlog(Blog blog) {
-        if (blog.getId() == null) {
-            blog.setCreateTime(new Date());
-            blog.setUpdateTime(new Date());
-            blog.setViews(0);
-        } else {
-            Blog oldBlog = blogRepository.getOne(blog.getId());
-            if (!oldBlog.getFirstPicture().equals(blog.getFirstPicture())) {
-                deleteOldFirstPicture(oldBlog.getFirstPicture());
-            }
-            blog.setUpdateTime(new Date());
-        }
+        blog.setCreateTime(new Date());
+        blog.setUpdateTime(new Date());
+        blog.setViews(0);
         return blogRepository.save(blog);
     }
 
+    /**
+     * @param srcBlog    前端传递的数据封装
+     * @param targetBlog 数据库查询的旧数据
+     * @return
+     */
     @Override
     @Transactional
     public Blog updateBlog(Blog srcBlog, Blog targetBlog) {
+        Blog oldBlog = blogRepository.getOne(srcBlog.getId());
+        if (!oldBlog.getFirstPicture().equals(srcBlog.getFirstPicture())) {
+            deleteOldFirstPicture(oldBlog.getFirstPicture());
+        }
+        srcBlog.setUpdateTime(new Date());
         BeanUtils.copyProperties(srcBlog, targetBlog, MyBeanUtils.getNullPropertyNames(srcBlog));
         return blogRepository.save(targetBlog);
     }
@@ -200,7 +206,8 @@ public class BlogServiceImpl implements BlogService {
     }
 
     private void deleteOldFirstPicture(String firstPicture) {
-        File file = new File(firstPicture);
+        String[] split = firstPicture.split("/");
+        File file = new File(fileUploadDic + split[split.length - 1]);
         file.delete();
     }
 

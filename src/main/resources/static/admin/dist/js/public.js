@@ -1,3 +1,5 @@
+document.write("<script th:src=\"@{/admin/plugins/jquery/jquery.min.js}\"></script>");
+
 <!-- 正则验证 start-->
 /**
  * 判空
@@ -6,7 +8,7 @@
  * @returns {boolean}
  */
 function isNull(obj) {
-    if (obj == null || obj == undefined || obj.trim() == "") {
+    if (obj == null || obj == undefined || obj == "") {
         return true;
     }
     return false;
@@ -20,7 +22,7 @@ function isNull(obj) {
  * @returns {boolean}
  */
 function validLength(obj, length) {
-    if (obj.trim().length < length) {
+    if (obj.length < length) {
         return true;
     }
     return false;
@@ -59,9 +61,9 @@ function isURL(str_url) {
 function validUserName(userName) {
     var pattern = /^[a-zA-Z0-9_-]{4,16}$/;
     if (pattern.test(userName.trim())) {
-        return (true);
+        return true;
     } else {
-        return (false);
+        return false;
     }
 }
 
@@ -74,9 +76,9 @@ function validUserName(userName) {
 function validCN_ENString2_18(str) {
     var pattern = /^[a-zA-Z0-9-\u4E00-\u9FA5_,， ]{2,18}$/;
     if (pattern.test(str.trim())) {
-        return (true);
+        return true;
     } else {
-        return (false);
+        return false;
     }
 }
 
@@ -89,9 +91,9 @@ function validCN_ENString2_18(str) {
 function validCN_ENString2_100(str) {
     var pattern = /^[a-zA-Z0-9-\u4E00-\u9FA5_,， ]{2,100}$/;
     if (pattern.test(str.trim())) {
-        return (true);
+        return true;
     } else {
-        return (false);
+        return false;
     }
 }
 
@@ -104,9 +106,9 @@ function validCN_ENString2_100(str) {
 function validPassword(password) {
     var pattern = /^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)])+$)^.{6,20}$/;
     if (pattern.test(password.trim())) {
-        return (true);
+        return true;
     } else {
-        return (false);
+        return false;
     }
 }
 

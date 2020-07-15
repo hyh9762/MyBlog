@@ -5,30 +5,21 @@ import com.itomelet.blog.po.User;
 import com.itomelet.blog.servive.blog.BlogService;
 import com.itomelet.blog.servive.tag.TagService;
 import com.itomelet.blog.servive.type.TypeService;
-import com.itomelet.blog.vo.BlogQuery;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/admin")
 public class BlogController {
 
-    private static final String INPUT = "admin/blogs-input";
+    private static final String EDIT = "admin/edit";
     private static final String LIST = "admin/blog";
     private static final String REDIRECT_LIST = "redirect:/admin/blogs";
 
@@ -38,8 +29,9 @@ public class BlogController {
     private TypeService typeService;
     @Autowired
     private TagService tagService;
-    @Value("${file.uploadPath}")
-    private String filePath;
+
+    /*@Value("${file.uploadPath}")
+    private String filePath;*/
 
 
     /**
@@ -81,48 +73,63 @@ public class BlogController {
     }
 
 
-    @PostMapping("/blogs/search")
+    /*@PostMapping("/blogs/search")
     public String search(Model model, BlogQuery blog, @PageableDefault(size = 10, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable) {
         blog.setContent(blog.getTitle());
         model.addAttribute("page", blogService.searchBlogs(pageable, blog));
         return "admin/blogs :: blogList";
-    }
+    }*/
 
 
-    @GetMapping("/blogs/input/{id}")
-    public String input(Model model, @PathVariable Long id) {
+    @GetMapping("/blogs/edit/{id}")
+    public String edit(Model model, @PathVariable Long id) {
         model.addAttribute("types", typeService.listAll());
         model.addAttribute("tags", tagService.listAll());
         if (id != -1) {
             Blog b = blogService.getBlog(id);
-            b.init();
+            //b.init();
             model.addAttribute("blog", b);
         } else {
             model.addAttribute("blog", new Blog());
         }
-        return INPUT;
+        return EDIT;
     }
 
 
     @PostMapping("/blogs/save")
-    public String saveBlog(Blog blog, RedirectAttributes attributes, HttpSession session, MultipartFile firstPictureBean) {
+    @ResponseBody
+    public boolean saveBlog(@RequestBody Blog blog, HttpSession session) {
         blog.setUser((User) session.getAttribute("user"));
         blog.setType(typeService.getType(blog.getType().getId()));
         blog.setTags(tagService.listTags(blog.getTagIds()));
-        String firstPicture = savePicture(firstPictureBean);
+        /*String firstPicture = savePicture(firstPictureBean);
         if (firstPicture != null) {
             blog.setFirstPicture(firstPicture);
-        }
+        }*/
         Blog b = blogService.saveBlog(blog);
         if (b == null) {
-            attributes.addFlashAttribute("message", "操作失败");
+            return false;
         } else {
-            attributes.addFlashAttribute("message", "操作成功");
+            return true;
         }
-        return REDIRECT_LIST;
     }
 
-    private String savePicture(MultipartFile picture) {
+    @PostMapping("/blogs/update")
+    @ResponseBody
+    public boolean updateBlog(@RequestBody Blog blog, HttpSession session) {
+        blog.setUser((User) session.getAttribute("user"));
+        blog.setType(typeService.getType(blog.getType().getId()));
+        blog.setTags(tagService.listTags(blog.getTagIds()));
+        Blog oldBlog = blogService.getBlog(blog.getId());
+        Blog b = blogService.updateBlog(blog, oldBlog);
+        if (b == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /*private String savePicture(MultipartFile picture) {
         if (picture.getSize() == 0) {
             return null;
         }
@@ -144,7 +151,7 @@ public class BlogController {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 
 
     @PostMapping("/blogs/delete")

@@ -18,8 +18,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private LoginInterceptor loginInterceptor;
 
-    @Value("${file.uploadPath}")
-    private String filePath;
+    @Value("${file.uploadDic}")
+    private String fileUploadDic;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -31,6 +31,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(filePath + "**").addResourceLocations("file:" + filePath);
+        registry.addResourceHandler("/upload/**").addResourceLocations("file:" + fileUploadDic);
     }
 }

@@ -4,4 +4,4 @@ spring:
   messages:
     basename: i18n/messages
 comment.avatar: /images/avatar.png
-file.uploadPath: /root/usr/upload/firstPictures/
+file.uploadDic: G:/root/usr/upload/firstPictures/
