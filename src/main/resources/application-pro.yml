@@ -11,7 +11,7 @@ spring:
   servlet:
     multipart:
       max-file-size: 10MB
-
+file.uploadDic: /root/usr/upload/firstPictures/
 logging:
   level:
     root: warn
