@@ -1,8 +1,16 @@
 package com.itomelet.blog.util;
 
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 
+import java.beans.PropertyDescriptor;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 13
@@ -17,6 +25,47 @@ public class MyBlogUtils {
             effectiveURI = null;
         }
         return effectiveURI;
+    }
+
+    /**
+     * pageable参数处理，获取pageable对象
+     *
+     * @param page
+     * @param limit
+     * @param sidx
+     * @param order
+     * @return
+     */
+    public static Pageable genPage(Integer page, Integer limit, String sidx, String order) {
+        page = page == null || page < 0 ? 0 : page - 1;
+        sidx = sidx == null ? "updateTime" : sidx;
+        order = order == null ? "desc" : order;
+        Sort sort;
+        if (order.equals("desc")) {
+            sort = Sort.by(Sort.Direction.DESC, sidx);
+        } else {
+            sort = Sort.by(Sort.Direction.ASC, sidx);
+        }
+        return PageRequest.of(page, limit, sort);
+    }
+
+    /**
+     * 获取所有的属性值为空属性名数组
+     *
+     * @param source
+     * @return
+     */
+    public static String[] getNullPropertyNames(Object source) {
+        BeanWrapper beanWrapper = new BeanWrapperImpl(source);
+        PropertyDescriptor[] pds = beanWrapper.getPropertyDescriptors();
+        List<String> nullPropertyNames = new ArrayList<>();
+        for (PropertyDescriptor pd : pds) {
+            String propertyName = pd.getName();
+            if (beanWrapper.getPropertyValue(propertyName) == null) {
+                nullPropertyNames.add(propertyName);
+            }
+        }
+        return nullPropertyNames.toArray(new String[nullPropertyNames.size()]);
     }
 
     public static String cleanString(String value) {

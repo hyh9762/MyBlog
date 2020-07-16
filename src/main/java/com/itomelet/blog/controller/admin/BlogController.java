@@ -5,14 +5,14 @@ import com.itomelet.blog.po.User;
 import com.itomelet.blog.servive.blog.BlogService;
 import com.itomelet.blog.servive.tag.TagService;
 import com.itomelet.blog.servive.type.TypeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.itomelet.blog.util.MyBlogUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -21,13 +21,13 @@ public class BlogController {
 
     private static final String EDIT = "admin/edit";
     private static final String LIST = "admin/blog";
-    private static final String REDIRECT_LIST = "redirect:/admin/blogs";
+    //private static final String REDIRECT_LIST = "redirect:/admin/blogs";
 
-    @Autowired
+    @Resource
     private BlogService blogService;
-    @Autowired
+    @Resource
     private TypeService typeService;
-    @Autowired
+    @Resource
     private TagService tagService;
 
     /*@Value("${file.uploadPath}")
@@ -59,17 +59,11 @@ public class BlogController {
     @GetMapping("/blogs/list")
     public @ResponseBody
     Page<Blog> listBlogs(Integer page, Integer limit, String sidx, String order, String keyword) {
-        page = page == null || page < 0 ? 0 : page - 1;
-        sidx = sidx == null ? "updateTime" : sidx;
-        order = order == null ? "desc" : order;
-        keyword = keyword == null ? "" : keyword;
-        Sort sort;
-        if (order.equals("desc")) {
-            sort = Sort.by(Sort.Direction.DESC, sidx);
-        } else {
-            sort = Sort.by(Sort.Direction.ASC, sidx);
+        Pageable pageable = MyBlogUtils.genPage(page, limit, sidx, order);
+        if (keyword == null) {
+            keyword = "";
         }
-        return blogService.listBlogsInAdmin(PageRequest.of(page, limit, sort), keyword);
+        return blogService.listBlogsInAdmin(pageable, keyword);
     }
 
 

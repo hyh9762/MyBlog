@@ -1,11 +1,12 @@
 package com.itomelet.blog.po;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -16,8 +17,12 @@ public class Type {
     @GeneratedValue
     private Long id;
 
-    @NotBlank(message = "分类名称不能为空")
     private String name;
+
+    private String icon;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
 
     @OneToMany(mappedBy = "type")  //被维护
     @JsonIgnore
@@ -25,6 +30,7 @@ public class Type {
 
     public Type() {
     }
+
 
     public Long getId() {
         return id;
@@ -51,11 +57,30 @@ public class Type {
     }
 
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String categoryIcon) {
+        this.icon = categoryIcon;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public String toString() {
         return "Type{" +
                "id=" + id +
                ", name='" + name + '\'' +
+               ", categoryIcon='" + icon + '\'' +
+               ", createTime=" + createTime +
+               ", blogs=" + blogs +
                '}';
     }
 }

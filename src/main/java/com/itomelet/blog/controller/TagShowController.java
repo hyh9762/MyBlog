@@ -3,7 +3,6 @@ package com.itomelet.blog.controller;
 import com.itomelet.blog.po.Tag;
 import com.itomelet.blog.servive.blog.BlogService;
 import com.itomelet.blog.servive.tag.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -12,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -20,10 +20,10 @@ import java.util.List;
 @Controller
 public class TagShowController {
 
-    @Autowired
+    @Resource
     private TagService tagService;
 
-    @Autowired
+    @Resource
     private BlogService blogService;
 
     @GetMapping("/tags/{id}")
@@ -36,6 +36,6 @@ public class TagShowController {
         model.addAttribute("tags", tags);
         model.addAttribute("page", blogService.listByTag(id, pageable));
         model.addAttribute("activeTagId", id);
-        return "tags";
+        return "tag";
     }
 }

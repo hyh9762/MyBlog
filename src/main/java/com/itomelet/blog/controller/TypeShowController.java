@@ -3,7 +3,6 @@ package com.itomelet.blog.controller;
 import com.itomelet.blog.po.Type;
 import com.itomelet.blog.servive.blog.BlogService;
 import com.itomelet.blog.servive.type.TypeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -12,15 +11,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
 public class TypeShowController {
 
-    @Autowired
+    @Resource
     private TypeService typeService;
 
-    @Autowired
+    @Resource
     private BlogService blogService;
 
     @GetMapping("/types/{id}")
@@ -34,7 +34,7 @@ public class TypeShowController {
         model.addAttribute("types", types);
         model.addAttribute("page", blogService.listByType(id, pageable));
         model.addAttribute("activeTypeId", id);
-        return "types";
+        return "type";
     }
 
 }

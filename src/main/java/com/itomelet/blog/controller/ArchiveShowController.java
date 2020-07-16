@@ -1,15 +1,16 @@
 package com.itomelet.blog.controller;
 
 import com.itomelet.blog.servive.blog.BlogService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.annotation.Resource;
+
 @Controller
 public class ArchiveShowController {
 
-    @Autowired
+    @Resource
     BlogService blogService;
 
     @GetMapping("/archives")

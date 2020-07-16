@@ -4,12 +4,12 @@ import com.itomelet.blog.dao.BlogRepository;
 import com.itomelet.blog.dao.CommentRepository;
 import com.itomelet.blog.po.Comment;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,10 +17,10 @@ import java.util.List;
 @Service
 public class CommentServiceImpl implements CommentService {
 
-    @Autowired
+    @Resource
     private CommentRepository commentRepository;
 
-    @Autowired
+    @Resource
     private BlogRepository blogRepository;
 
     @Value("${comment.avatar}")

@@ -2,8 +2,8 @@ package com.itomelet.blog.servive.type;
 
 import com.itomelet.blog.dao.TypeRepository;
 import com.itomelet.blog.po.Type;
+import com.itomelet.blog.util.MyBlogUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,17 +11,20 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class TypeServiceImpl implements TypeService {
 
-    @Autowired
+    @Resource
     private TypeRepository typeRepository;
 
     @Transactional
     @Override
     public Type saveType(Type type) {
+        type.setCreateTime(new Date());
         return typeRepository.save(type);
     }
 
@@ -58,7 +61,7 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public Type updateType(Long id, Type type) {
         Type t = typeRepository.getOne(id);
-        BeanUtils.copyProperties(type, t);
+        BeanUtils.copyProperties(type, t, MyBlogUtils.getNullPropertyNames(type));
         return typeRepository.save(t);
     }
 
@@ -66,6 +69,19 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public void deleteType(Long id) {
         typeRepository.deleteById(id);
+    }
+
+    @Override
+    public Boolean deleteType(Integer[] ids) {
+        try {
+            for (Integer id : ids) {
+                deleteType(Long.valueOf(id));
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

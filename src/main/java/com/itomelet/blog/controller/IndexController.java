@@ -3,7 +3,6 @@ package com.itomelet.blog.controller;
 import com.itomelet.blog.servive.blog.BlogService;
 import com.itomelet.blog.servive.tag.TagService;
 import com.itomelet.blog.servive.type.TypeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -14,14 +13,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.annotation.Resource;
+
 @Controller
 public class IndexController {
 
-    @Autowired
+    @Resource
     private BlogService blogService;
-    @Autowired
+    @Resource
     private TypeService typeService;
-    @Autowired
+    @Resource
     private TagService tagService;
 
     @GetMapping("/")

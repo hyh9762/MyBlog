@@ -6,10 +6,9 @@ import com.itomelet.blog.po.Blog;
 import com.itomelet.blog.po.Tag;
 import com.itomelet.blog.po.Type;
 import com.itomelet.blog.util.MarkdownUtils;
-import com.itomelet.blog.util.MyBeanUtils;
+import com.itomelet.blog.util.MyBlogUtils;
 import com.itomelet.blog.vo.BlogQuery;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import javax.persistence.criteria.*;
 import java.io.File;
 import java.util.*;
@@ -27,10 +27,10 @@ import java.util.*;
 @Service
 public class BlogServiceImpl implements BlogService {
 
-    @Autowired
+    @Resource
     private BlogRepository blogRepository;
 
-    @Autowired
+    @Resource
     private CommentRepository commentRepository;
 
     @Value("${file.uploadDic}")
@@ -175,7 +175,7 @@ public class BlogServiceImpl implements BlogService {
             deleteOldFirstPicture(oldBlog.getFirstPicture());
         }
         srcBlog.setUpdateTime(new Date());
-        BeanUtils.copyProperties(srcBlog, targetBlog, MyBeanUtils.getNullPropertyNames(srcBlog));
+        BeanUtils.copyProperties(srcBlog, targetBlog, MyBlogUtils.getNullPropertyNames(srcBlog));
         return blogRepository.save(targetBlog);
     }
 
