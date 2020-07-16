@@ -1,9 +1,11 @@
 package com.itomelet.blog.po;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,14 +16,16 @@ public class Tag {
     @GeneratedValue
     private Long id;
     private String name;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createdTime;
 
-    public Tag() {
-    }
 
     @ManyToMany(mappedBy = "tags")
     @JsonIgnore
     private List<Blog> blogs = new ArrayList<>();
 
+    public Tag() {
+    }
 
     public List<Blog> getBlogs() {
         return blogs;
@@ -47,11 +51,21 @@ public class Tag {
         this.name = name;
     }
 
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createTime) {
+        this.createdTime = createTime;
+    }
+
     @Override
     public String toString() {
         return "Tag{" +
                "id=" + id +
                ", name='" + name + '\'' +
+               ", createTime=" + createdTime +
+               ", blogs=" + blogs +
                '}';
     }
 }

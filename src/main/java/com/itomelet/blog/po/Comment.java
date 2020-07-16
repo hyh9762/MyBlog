@@ -1,5 +1,6 @@
 package com.itomelet.blog.po;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -19,12 +20,14 @@ public class Comment {
     private String content;
     private String avatar;
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createdTime;
+    private Boolean published;
     @ManyToOne
-    @JsonIgnore
     private Blog blog;
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
     private List<Comment> replyComments = new ArrayList<>();
+    @JsonIgnore
     @ManyToOne()
     private Comment parentComment;
 
@@ -32,6 +35,14 @@ public class Comment {
 
 
     public Comment() {
+    }
+
+    public Boolean getPublished() {
+        return published;
+    }
+
+    public void setPublished(Boolean published) {
+        this.published = published;
     }
 
     public boolean isAdminComment() {
@@ -124,9 +135,6 @@ public class Comment {
                ", avatar='" + avatar + '\'' +
                ", createdTime=" + createdTime +
                ", blog=" + blog +
-               ", replyComments=" + replyComments +
-               ", parentComment=" + parentComment +
-               ", adminComment=" + adminComment +
                '}';
     }
 }

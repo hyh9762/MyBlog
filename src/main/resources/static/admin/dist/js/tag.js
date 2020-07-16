@@ -3,8 +3,8 @@ $(function () {
         url: '/admin/tags/list',
         datatype: "json",
         colModel: [
-            {label: 'id', name: 'tagId', index: 'tagId', width: 50, key: true, hidden: true},
-            {label: '标签名称', name: 'tagName', index: 'tagName', width: 240},
+            {label: 'id', name: 'id', indeinx: 'id', width: 50, key: true, hidden: true},
+            {label: '标签名称', name: 'name', index: 'name', width: 240},
             {label: '添加时间', name: 'createTime', index: 'createTime', width: 120}
         ],
         height: 560,
@@ -12,16 +12,19 @@ $(function () {
         rowList: [10, 20, 50],
         styleUI: 'Bootstrap',
         loadtext: '信息读取中...',
+        sortable: true,
+        sortname: 'createdTime',
+        sortorder: 'desc',
         rownumbers: false,
         rownumWidth: 20,
         autowidth: true,
         multiselect: true,
         pager: "#jqGridPager",
         jsonReader: {
-            root: "data.list",
-            page: "data.currPage",
-            total: "data.totalPage",
-            records: "data.totalCount"
+            root: "content",
+            page: "number+1",
+            total: "totalPages",
+            records: "totalElements"
         },
         prmNames: {
             page: "page",
@@ -55,19 +58,18 @@ function tagAdd() {
             icon: "error",
         });
     } else {
-        var url = '/admin/tags/save?tagName=' + tagName;
+        var url = '/admin/tags/save/' + tagName;
         $.ajax({
             type: 'POST',//方法类型
             url: url,
             success: function (result) {
-                if (result.resultCode == 200) {
+                if (result.status) {
                     $("#tagName").val('')
                     swal("保存成功", {
                         icon: "success",
                     });
                     reload();
-                }
-                else {
+                } else {
                     $("#tagName").val('')
                     swal(result.message, {
                         icon: "error",
@@ -91,7 +93,7 @@ function deleteTag() {
     }
     swal({
         title: "确认弹框",
-        text: "确认要删除数据吗?",
+        text: "确认要删除标签吗?（如果有博客文章在使用则无法删除）",
         icon: "warning",
         buttons: true,
         dangerMode: true,
@@ -103,7 +105,7 @@ function deleteTag() {
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function (r) {
-                        if (r.resultCode == 200) {
+                        if (r.status) {
                             swal("删除成功", {
                                 icon: "success",
                             });

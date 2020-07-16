@@ -24,7 +24,7 @@ public interface TypeService {
 
     void deleteType(Long id);
 
-    Boolean deleteType(Integer[] ids);
+    Boolean deleteType(Long[] ids);
 
     Long getTotalCategories();
 }

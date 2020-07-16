@@ -156,7 +156,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     @Transactional
     public Blog saveBlog(Blog blog) {
-        blog.setCreateTime(new Date());
+        blog.setCreatedTime(new Date());
         blog.setUpdateTime(new Date());
         blog.setViews(0);
         return blogRepository.save(blog);
@@ -189,14 +189,14 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     @Transactional
-    public Boolean deleteBlog(Integer[] ids) {
+    public Boolean deleteBlog(Long[] ids) {
         try {
-            for (Integer id : ids) {
+            for (Long id : ids) {
                 //删除首图
-                String firstPicture = blogRepository.getOne(Long.valueOf(id)).getFirstPicture();
+                String firstPicture = blogRepository.getOne(id).getFirstPicture();
                 deleteOldFirstPicture(firstPicture);
-                commentRepository.deleteByBlogId(Long.valueOf(id));
-                blogRepository.deleteById(Long.valueOf(id));
+                commentRepository.deleteByBlogId(id);
+                blogRepository.deleteById(id);
             }
             return true;
         } catch (Exception e) {

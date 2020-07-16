@@ -15,7 +15,7 @@
             <!-- 引入页面头header-fragment -->
             <div th:replace="admin/header::header-nav"></div>
             <!-- 引入工具栏sidebar-fragment -->
-            <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+            <div th:replace="admin/sidebar::sidebar-fragment('comments')"></div>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <form id="replyForm">
-                                        <input type="hidden" class="form-control" id="categoryId" name="categoryId">
+                                        <input type="hidden" class="form-control" id="blogId" name="blogId">
                                         <div class="form-group">
                                             <label for="replyBody" class="control-label">回复内容:</label>
                                             <textarea type="text" class="form-control" id="replyBody" name="replyBody"

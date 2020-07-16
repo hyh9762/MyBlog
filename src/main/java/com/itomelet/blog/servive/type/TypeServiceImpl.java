@@ -24,7 +24,7 @@ public class TypeServiceImpl implements TypeService {
     @Transactional
     @Override
     public Type saveType(Type type) {
-        type.setCreateTime(new Date());
+        type.setCreatedTime(new Date());
         return typeRepository.save(type);
     }
 
@@ -72,10 +72,10 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public Boolean deleteType(Integer[] ids) {
+    public Boolean deleteType(Long[] ids) {
         try {
-            for (Integer id : ids) {
-                deleteType(Long.valueOf(id));
+            for (Long id : ids) {
+                deleteType(id);
             }
             return true;
         } catch (Exception e) {

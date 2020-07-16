@@ -118,6 +118,20 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public Boolean deleteTag(Long[] ids) {
+        try {
+            for (Long id : ids) {
+                tagRepository.deleteById(id);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    @Override
     public Long getTotalTags() {
         return tagRepository.count();
     }

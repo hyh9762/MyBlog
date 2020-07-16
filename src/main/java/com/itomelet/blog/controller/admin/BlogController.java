@@ -150,7 +150,7 @@ public class BlogController {
 
     @PostMapping("/blogs/delete")
     @ResponseBody
-    public boolean delete(@RequestBody Integer[] ids) {
+    public boolean delete(@RequestBody Long[] ids) {
         return blogService.deleteBlog(ids);
 
     }

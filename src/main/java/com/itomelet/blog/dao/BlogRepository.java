@@ -23,7 +23,7 @@ public interface BlogRepository extends JpaRepository<Blog, Long>, JpaSpecificat
      * @param keyword
      * @return
      */
-    @Query("select new Blog(b.id,b.title,b.firstPicture,b.views,b.published,b.type,b.createTime) from Blog as b where b.title like ?1 or b.type.name like ?1")
+    @Query("select new Blog(b.id,b.title,b.firstPicture,b.views,b.published,b.type,b.createdTime) from Blog as b where b.title like ?1 or b.type.name like ?1")
     Page<Blog> listBlogsInAdmin(Pageable pageable, String keyword);
 
     @Query("select b from Blog b where b.title like ?1 or b.content like ?1 or b.description like ?1 or b.type.name like ?1 or b.user.nickname like ?1")

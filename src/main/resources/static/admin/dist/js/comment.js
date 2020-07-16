@@ -3,29 +3,32 @@ $(function () {
         url: '/admin/comments/list',
         datatype: "json",
         colModel: [
-            {label: 'id', name: 'commentId', index: 'commentId', width: 50, key: true, hidden: true},
-            {label: '评论内容', name: 'commentBody', index: 'commentBody', width: 120},
-            {label: '评论时间', name: 'commentCreateTime', index: 'commentCreateTime', width: 60},
-            {label: '评论人名称', name: 'commentator', index: 'commentator', width: 60},
+            {label: 'id', name: 'id', index: 'id', width: 50, key: true, hidden: true},
+            {label: '回复内容', name: 'content', index: 'content', width: 120},
+            {label: '文章标题', name: 'blog.title', index: 'blog.title', width: 120},
+            {label: '评论时间', name: 'createdTime', index: 'createdTime', width: 60},
+            {label: '评论人名称', name: 'nickname', index: 'nickname', width: 60},
             {label: '评论人邮箱', name: 'email', index: 'email', width: 90},
-            {label: '状态', name: 'commentStatus', index: 'commentStatus', width: 60, formatter: statusFormatter},
-            {label: '回复内容', name: 'replyBody', index: 'replyBody', width: 120},
+            {label: '状态', name: 'published', index: 'published', width: 60, formatter: statusFormatter},
         ],
         height: 700,
         rowNum: 10,
         rowList: [10, 20, 50],
         styleUI: 'Bootstrap',
         loadtext: '信息读取中...',
+        sortable: true,
+        sortname: 'createdTime',
+        sortorder: 'desc',
         rownumbers: false,
         rownumWidth: 20,
         autowidth: true,
         multiselect: true,
         pager: "#jqGridPager",
         jsonReader: {
-            root: "data.list",
-            page: "data.currPage",
-            total: "data.totalPage",
-            records: "data.totalCount"
+            root: "content",
+            page: "number+1",
+            total: "totalPages",
+            records: "totalElements"
         },
         prmNames: {
             page: "page",
@@ -40,11 +43,11 @@ $(function () {
     $(window).resize(function () {
         $("#jqGrid").setGridWidth($(".card-body").width());
     });
+
     function statusFormatter(cellvalue) {
-        if (cellvalue == 0) {
+        if (!cellvalue) {
             return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 80%;\">待审核</button>";
-        }
-        else if (cellvalue == 1) {
+        } else {
             return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 80%;\">已审核</button>";
         }
     }
@@ -83,7 +86,7 @@ function checkDoneComments() {
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function (r) {
-                        if (r.resultCode == 200) {
+                        if (r) {
                             swal("审核成功", {
                                 icon: "success",
                             });
@@ -122,7 +125,7 @@ function deleteComments() {
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function (r) {
-                        if (r.resultCode == 200) {
+                        if (r) {
                             swal("删除成功", {
                                 icon: "success",
                             });
@@ -147,7 +150,7 @@ function reply() {
     }
     var rowData = $("#jqGrid").jqGrid('getRowData', id);
     console.log(rowData);
-    if (rowData.commentStatus.indexOf('待审核') > -1) {
+    if (rowData.published.indexOf('待审核') > -1) {
         swal("请先审核该评论再进行回复!", {
             icon: "warning",
         });
@@ -168,20 +171,19 @@ $('#saveButton').click(function () {
     } else {
         var url = '/admin/comments/reply';
         var id = getSelectedRow();
-        var params = {"commentId": id, "replyBody": replyBody}
+        var params = {"parentCommentId": id, "content": replyBody};
         $.ajax({
             type: 'POST',//方法类型
             url: url,
             data: params,
             success: function (result) {
-                if (result.resultCode == 200) {
+                if (result) {
                     $('#replyModal').modal('hide');
                     swal("回复成功", {
                         icon: "success",
                     });
                     reload();
-                }
-                else {
+                } else {
                     $('#replyModal').modal('hide');
                     swal(result.message, {
                         icon: "error",

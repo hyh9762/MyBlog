@@ -1,6 +1,7 @@
 package com.itomelet.blog.po;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class Blog {
     private boolean recommend; //是否推荐
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
+    private Date createdTime;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
@@ -47,6 +48,7 @@ public class Blog {
     private List<Tag> tags = new ArrayList<>();
 
     @OneToMany(mappedBy = "blog")
+    @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
 
     public Blog() {
@@ -59,7 +61,7 @@ public class Blog {
         this.views = views;
         this.published = published;
         this.type = type;
-        this.createTime = createTime;
+        this.createdTime = createTime;
     }
 
     /*public void init() {
@@ -229,12 +231,12 @@ public class Blog {
         this.recommend = recommend;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreatedTime(Date createTime) {
+        this.createdTime = createTime;
     }
 
     public Date getUpdateTime() {
@@ -259,7 +261,7 @@ public class Blog {
                ", commentabled=" + commentabled +
                ", published=" + published +
                ", recommend=" + recommend +
-               ", createTime=" + createTime +
+               ", createTime=" + createdTime +
                ", updateTime=" + updateTime +
                ", description='" + description + '\'' +
                ", tagIds='" + tagIds + '\'' +

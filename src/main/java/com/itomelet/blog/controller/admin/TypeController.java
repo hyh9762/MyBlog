@@ -103,7 +103,7 @@ public class TypeController {
      */
     @PostMapping("/types/delete")
     @ResponseBody
-    public Result delete(@RequestBody Integer[] ids) {
+    public Result delete(@RequestBody Long[] ids) {
         return !typeService.deleteType(ids) ? new Result(false, "删除失败") : new Result(true, "删除成功");
 
 

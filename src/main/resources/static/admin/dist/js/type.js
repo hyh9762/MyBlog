@@ -14,7 +14,7 @@ $(function () {
         styleUI: 'Bootstrap',
         loadtext: '信息读取中...',
         sortable: true,
-        sortname: 'createTime',
+        sortname: 'createdTime',
         sortorder: 'desc',
         rownumbers: false,
         rownumWidth: 20,
@@ -132,7 +132,6 @@ function typeEdit() {
     $('#typeModal').modal('show');
     $("#typeId").val(id);
     $("#typeName").val(name);
-    $("#typeIcon").val(icon);
 
 }
 
@@ -143,7 +142,7 @@ function deleteType() {
     }
     swal({
         title: "确认弹框",
-        text: "确认要删除数据吗（该分类下存在博客文章无法删除）?",
+        text: "确认要删除分类吗（该分类若存在博客文章则无法删除）?",
         icon: "warning",
         buttons: true,
         dangerMode: true,

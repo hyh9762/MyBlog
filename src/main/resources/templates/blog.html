@@ -623,7 +623,7 @@ h5,h6{font-size:1em;}
                                 <div class="ui left icon input">
                                     <i class="mail icon"></i>
                                     <input type="text" name="email" placeholder="邮箱"
-                                           th:value="${session.user}!=null ? ${session.user.email}">
+                                           th:value="${session.user}!=null ? ${session.user.email}:''">
                                 </div>
                             </div>
                             <div class="field  m-margin-bottom-small m-mobile-wide">
@@ -711,7 +711,7 @@ h5,h6{font-size:1em;}
         <script src="../static/lib/qrcode/qrcode.min.js"></script>
         <script src="../static/lib/waypoints/jquery.waypoints.min.js"></script>
         <!--/*/</th:block>/*/-->
-
+        <script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
 
         <script th:inline="javascript">
 
@@ -826,6 +826,9 @@ h5,h6{font-size:1em;}
                     "content": $("[name='content']").val()
                 }, function (responseTxt, statusTxt, xhr) {
                     //$(window).scrollTo($('#comment-container'), 500);
+                    swal("评论成功，请等待管理员审核", {
+                        icon: "success",
+                    });
                     clearContent();
                 });
             }
@@ -853,5 +856,6 @@ h5,h6{font-size:1em;}
 
 
         </script>
+
     </body>
 </html>

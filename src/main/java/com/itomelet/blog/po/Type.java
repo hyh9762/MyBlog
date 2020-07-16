@@ -22,7 +22,7 @@ public class Type {
     private String icon;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
+    private Date createdTime;
 
     @OneToMany(mappedBy = "type")  //被维护
     @JsonIgnore
@@ -65,12 +65,12 @@ public class Type {
         this.icon = categoryIcon;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreatedTime(Date createTime) {
+        this.createdTime = createTime;
     }
 
     @Override
@@ -79,7 +79,7 @@ public class Type {
                "id=" + id +
                ", name='" + name + '\'' +
                ", categoryIcon='" + icon + '\'' +
-               ", createTime=" + createTime +
+               ", createTime=" + createdTime +
                ", blogs=" + blogs +
                '}';
     }

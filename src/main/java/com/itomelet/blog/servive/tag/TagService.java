@@ -26,5 +26,7 @@ public interface TagService {
 
     void deleteTag(Long id);
 
+    Boolean deleteTag(Long[] ids);
+
     Long getTotalTags();
 }

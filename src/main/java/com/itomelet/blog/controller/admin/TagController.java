@@ -2,87 +2,69 @@ package com.itomelet.blog.controller.admin;
 
 import com.itomelet.blog.po.Tag;
 import com.itomelet.blog.servive.tag.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.itomelet.blog.util.MyBlogUtils;
+import com.itomelet.blog.vo.Result;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import javax.annotation.Resource;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/admin")
 public class TagController {
 
-    @Autowired
+    @Resource
     private TagService tagService;
 
     @GetMapping("/tags")
-    public String Tags(@PageableDefault(size = 10, sort = {"id"}, direction = Sort.Direction.ASC) Pageable pageable,
-                       Model model) {
-        model.addAttribute("page", tagService.listAll(pageable));
-        return "admin/tags";
+    public String Tags() {
+        return "admin/tag";
     }
 
-    @GetMapping("/tags/input")
-    public String addInput(Model model) {
-        model.addAttribute("tag", new Tag());
-        return "admin/tags-input";
+    /**
+     * 分类管理页面数据展示
+     *
+     * @param page  页码
+     * @param limit 分页条数
+     * @param sidx  排序条件
+     * @param order 排序规则
+     * @return
+     */
+    @GetMapping("/tags/list")
+    public @ResponseBody
+    Page<Tag> listTags(Integer page, Integer limit, String sidx, String order) {
+        Pageable pageable = MyBlogUtils.genPage(page, limit, sidx, order);
+        return tagService.listAll(pageable);
     }
 
 
-    @PostMapping({"/tags/addTags", "/tags/editTag"})
-    public String saveTags(@Valid Tag Tag, BindingResult result, Model model, RedirectAttributes attributes) {
-        //如果校验不通过
-        if (result.hasErrors()) {
-            return "admin/tags-input";
+    @PostMapping("/tags/save/{tagName}")
+    @ResponseBody
+    public Result saveTag(@PathVariable String tagName) {
+        if (tagService.getTagByName(tagName) != null) {
+            return new Result(false, "该分类已存在");
         }
-        if (tagService.getTagByName(Tag.getName()) != null) {
-            result.rejectValue("name", "nameError", "该分类已存在");
-            return "admin/tags-input";
-        }
-
-        if (Tag.getId() == null) {
-            Tag t = tagService.saveTag(Tag);
-            if (t == null) {
-                attributes.addFlashAttribute("message", "新增失败");
-            } else {
-                attributes.addFlashAttribute("message", "新增成功");
-
-            }
-        } else {
-            Tag t = tagService.updateTag(Tag.getId(), Tag);
-            if (t == null) {
-                attributes.addFlashAttribute("message", "更新失败");
-            } else {
-                attributes.addFlashAttribute("message", "更新成功");
-
-            }
-        }
-
-
-        return "redirect:/admin/tags";
+        Tag tag = new Tag();
+        tag.setName(tagName);
+        tag.setCreatedTime(new Date());
+        return tagService.saveTag(tag) == null ? new Result(false, "添加失败") : new Result(true, "添加成功");
     }
 
 
-    @GetMapping("/tags/input/{id}")
-    public String editInput(@PathVariable Long id, Model model) {
-        model.addAttribute("tag", tagService.getTag(id));
-        return "admin/tags-input";
-    }
+    /**
+     * 删除选中的所有标签
+     *
+     * @param ids
+     * @return
+     */
+    @PostMapping("/tags/delete")
+    @ResponseBody
+    public Result delete(@RequestBody Long[] ids) {
+        return !tagService.deleteTag(ids) ? new Result(false, "删除失败") : new Result(true, "删除成功");
 
-    @GetMapping("/tags/delete/{id}")
-    public String delete(@PathVariable Long id, RedirectAttributes attributes) {
-        tagService.deleteTag(id);
-        attributes.addFlashAttribute("message", "删除成功");
-        return "redirect:/admin/tags";
     }
 
 }
