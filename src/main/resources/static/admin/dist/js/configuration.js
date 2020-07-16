@@ -9,12 +9,11 @@ $(function () {
             url: "/admin/configurations/website",
             data: params,
             success: function (result) {
-                if (result.resultCode == 200 && result.data) {
+                if (result) {
                     swal("保存成功", {
                         icon: "success",
                     });
-                }
-                else {
+                } else {
                     swal(result.message, {
                         icon: "error",
                     });
@@ -37,12 +36,11 @@ $(function () {
             url: "/admin/configurations/userInfo",
             data: params,
             success: function (result) {
-                if (result.resultCode == 200&& result.data) {
+                if (result) {
                     swal("保存成功", {
                         icon: "success",
                     });
-                }
-                else {
+                } else {
                     swal(result.message, {
                         icon: "error",
                     });
@@ -65,12 +63,11 @@ $(function () {
             url: "/admin/configurations/footer",
             data: params,
             success: function (result) {
-                if (result.resultCode == 200&& result.data) {
+                if (result) {
                     swal("保存成功", {
                         icon: "success",
                     });
-                }
-                else {
+                } else {
                     swal(result.message, {
                         icon: "error",
                     });
@@ -85,4 +82,4 @@ $(function () {
         });
     });
 
-})
+});
