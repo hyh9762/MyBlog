@@ -7,7 +7,7 @@
             <!-- 引入页面头header-fragment -->
             <div th:replace="admin/header::header-nav"></div>
             <!-- 引入工具栏sidebar-fragment -->
-            <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+            <div th:replace="admin/sidebar::sidebar-fragment('profile')"></div>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -33,16 +33,16 @@
                                             <!-- text input -->
                                             <div class="form-group">
                                                 <label>登陆名称</label>
-                                                <input type="text" class="form-control" id="loginUserName"
-                                                       name="loginUserName"
+                                                <input type="text" class="form-control" id="username"
+                                                       name="username"
                                                        placeholder="请输入登陆名称" required="true"
-                                                       th:value="${loginUserName}">
+                                                       th:value="${username}">
                                             </div>
                                             <div class="form-group">
                                                 <label>昵称</label>
-                                                <input type="text" class="form-control" id="nickName"
-                                                       name="nickName"
-                                                       placeholder="请输入昵称" required="true" th:value="${nickName}">
+                                                <input type="text" class="form-control" id="nickname"
+                                                       name="nickname"
+                                                       placeholder="请输入昵称" required="true" th:value="${nickname}">
                                             </div>
                                             <div class="card-footer">
                                                 <button type="button" id="updateUserNameButton" onsubmit="return false;"
@@ -67,15 +67,21 @@
                                             <!-- input states -->
                                             <div class="form-group">
                                                 <label class="control-label"><i class="fa fa-key"></i> 原密码</label>
-                                                <input type="text" class="form-control" id="originalPassword"
+                                                <input type="password" class="form-control" id="originalPassword"
                                                        name="originalPassword"
                                                        placeholder="请输入原密码" required="true">
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label"><i class="fa fa-key"></i> 新密码</label>
-                                                <input type="text" class="form-control" id="newPassword"
+                                                <input type="password" class="form-control" id="newPassword"
                                                        name="newPassword"
                                                        placeholder="请输入新密码" required="true">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label"><i class="fa fa-key"></i> 新密码</label>
+                                                <input type="password" class="form-control" id="confirmNewPassword"
+                                                       name="newPassword"
+                                                       placeholder="确认新密码" required="true">
                                             </div>
                                             <div class="card-footer">
                                                 <button type="button" id="updatePasswordButton" onsubmit="return false;"
@@ -103,6 +109,8 @@
         <script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
         <!-- AdminLTE App -->
         <script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+        <!-- sweetalert -->
+        <script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
         <!-- public.js -->
         <script th:src="@{/admin/dist/js/public.js}"></script>
         <!-- profile -->

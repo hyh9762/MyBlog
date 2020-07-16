@@ -65,6 +65,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public Boolean replyComment(Comment comment, Long parentCommentId, User user) {
         //为管理员的回复设置默认属性
         comment.setNickname(user.getNickname());

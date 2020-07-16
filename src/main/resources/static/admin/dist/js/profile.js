@@ -1,10 +1,10 @@
 $(function () {
     //修改个人信息
     $('#updateUserNameButton').click(function () {
-        $("#updateUserNameButton").attr("disabled",true);
-        var userName = $('#loginUserName').val();
-        var nickName = $('#nickName').val();
-        if (validUserNameForUpdate(userName, nickName)) {
+        $("#updateUserNameButton").attr("disabled", true);
+        var username = $('#username').val();
+        var nickname = $('#nickname').val();
+        if (validUserNameForUpdate(username, nickname)) {
             //ajax提交数据
             var params = $("#userNameForm").serialize();
             $.ajax({
@@ -12,24 +12,29 @@ $(function () {
                 url: "/admin/profile/name",
                 data: params,
                 success: function (r) {
-                    if (r == 'success') {
-                        alert('修改成功');
+                    if (r) {
+                        swal(r.message, {
+                            icon: "success",
+                        });
                     } else {
-                        alert('修改失败');
-                        $("#updateUserNameButton").prop("disabled",false);
+                        swal(r.message, {
+                            icon: "error",
+                        });
+                        $("#updateUserNameButton").prop("disabled", false);
                     }
                 }
             });
         } else {
-            $("#updateUserNameButton").prop("disabled",false);
+            $("#updateUserNameButton").prop("disabled", false);
         }
     });
     //修改密码
     $('#updatePasswordButton').click(function () {
-        $("#updatePasswordButton").attr("disabled",true);
+        $("#updatePasswordButton").attr("disabled", true);
         var originalPassword = $('#originalPassword').val();
         var newPassword = $('#newPassword').val();
-        if (validPasswordForUpdate(originalPassword, newPassword)) {
+        var confirmNewPassword = $('#confirmNewPassword').val();
+        if (validPasswordForUpdate(originalPassword, newPassword, confirmNewPassword)) {
             var params = $("#userPasswordForm").serialize();
             $.ajax({
                 type: "POST",
@@ -37,17 +42,25 @@ $(function () {
                 data: params,
                 success: function (r) {
                     console.log(r);
-                    if (r == 'success') {
-                        alert('修改成功');
-                        window.location.href = '/admin/login';
+                    if (r.status) {
+                        swal(r.message, {
+                            icon: "success",
+                        }).then((flag) => {
+                                if (flag) {
+                                    window.location.href = "/admin"
+                                }
+                            }
+                        );
                     } else {
-                        alert('修改失败');
-                        $("#updatePasswordButton").attr("disabled",false);
+                        swal(r.message, {
+                            icon: "error",
+                        });
+                        $("#updatePasswordButton").attr("disabled", false);
                     }
                 }
             });
         } else {
-            $("#updatePasswordButton").attr("disabled",false);
+            $("#updatePasswordButton").attr("disabled", false);
         }
     });
 })
@@ -82,20 +95,22 @@ function validUserNameForUpdate(userName, nickName) {
 /**
  * 密码验证
  */
-function validPasswordForUpdate(originalPassword, newPassword) {
+function validPasswordForUpdate(originalPassword, newPassword, confirmNewPassword) {
     if (isNull(originalPassword) || originalPassword.trim().length < 1) {
-        $('#updatePassword-info').css("display", "block");
-        $('#updatePassword-info').html("请输入原密码！");
+        $('#updatePassword-info').css("display", "block").html("请输入原密码！");
         return false;
     }
     if (isNull(newPassword) || newPassword.trim().length < 1) {
-        $('#updatePassword-info').css("display", "block");
-        $('#updatePassword-info').html("新密码不能为空！");
+        $('#updatePassword-info').css("display", "block").html("新密码不能为空！");
+        return false;
+    }
+    if (newPassword !== confirmNewPassword) {
+        $('#updatePassword-info').css("display", "block").html("两次输入密码不一致！");
         return false;
     }
     if (!validPassword(newPassword)) {
         $('#updatePassword-info').css("display", "block");
-        $('#updatePassword-info').html("请输入符合规范的密码！");
+        $('#updatePassword-info').html("请输入符合规范的密码！最少6位，最多20位字母或数字、特殊字符的组合");
         return false;
     }
     return true;
