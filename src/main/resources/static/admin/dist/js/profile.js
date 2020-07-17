@@ -1,5 +1,8 @@
 $(function () {
     //修改个人信息
+    $('.updateUserName').change(function () {
+        $("#updateUserNameButton").attr("disabled", false);
+    });
     $('#updateUserNameButton').click(function () {
         $("#updateUserNameButton").attr("disabled", true);
         var username = $('#username').val();
@@ -29,6 +32,9 @@ $(function () {
         }
     });
     //修改密码
+    $('.updatePassword').change(function () {
+        $("#updatePasswordButton").attr("disabled", false);
+    });
     $('#updatePasswordButton').click(function () {
         $("#updatePasswordButton").attr("disabled", true);
         var originalPassword = $('#originalPassword').val();

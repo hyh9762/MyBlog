@@ -33,14 +33,14 @@
                                             <!-- text input -->
                                             <div class="form-group">
                                                 <label>登陆名称</label>
-                                                <input type="text" class="form-control" id="username"
+                                                <input type="text" class="form-control updateUserName" id="username"
                                                        name="username"
                                                        placeholder="请输入登陆名称" required="true"
                                                        th:value="${username}">
                                             </div>
                                             <div class="form-group">
                                                 <label>昵称</label>
-                                                <input type="text" class="form-control" id="nickname"
+                                                <input type="text" class="form-control updateUserName" id="nickname"
                                                        name="nickname"
                                                        placeholder="请输入昵称" required="true" th:value="${nickname}">
                                             </div>
@@ -67,19 +67,22 @@
                                             <!-- input states -->
                                             <div class="form-group">
                                                 <label class="control-label"><i class="fa fa-key"></i> 原密码</label>
-                                                <input type="password" class="form-control" id="originalPassword"
+                                                <input type="password" class="form-control updatePassword"
+                                                       id="originalPassword"
                                                        name="originalPassword"
                                                        placeholder="请输入原密码" required="true">
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label"><i class="fa fa-key"></i> 新密码</label>
-                                                <input type="password" class="form-control" id="newPassword"
+                                                <input type="password" class="form-control updatePassword"
+                                                       id="newPassword"
                                                        name="newPassword"
                                                        placeholder="请输入新密码" required="true">
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label"><i class="fa fa-key"></i> 新密码</label>
-                                                <input type="password" class="form-control" id="confirmNewPassword"
+                                                <label class="control-label"><i class="fa fa-key"></i> 确认新密码</label>
+                                                <input type="password" class="form-control updatePassword"
+                                                       id="confirmNewPassword"
                                                        name="newPassword"
                                                        placeholder="确认新密码" required="true">
                                             </div>
