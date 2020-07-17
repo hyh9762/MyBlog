@@ -29,35 +29,36 @@
                                             <!-- text input -->
                                             <div class="form-group">
                                                 <label>站点名称</label>
-                                                <input type="text" class="form-control" id="websiteName"
+                                                <input type="text" class="form-control updateWebsite" id="websiteName"
                                                        name="websiteName"
                                                        placeholder="站点名称"
                                                        th:value="${configuration.websiteName}">
                                             </div>
                                             <div class="form-group">
                                                 <label>站点Logo</label>
-                                                <input type="text" class="form-control" id="websiteLogo"
+                                                <input type="text" class="form-control updateWebsite" id="websiteLogo"
                                                        name="websiteLogo"
                                                        th:value="${configuration.websiteLogo}"
                                                        placeholder="站点Logo">
                                             </div>
                                             <div class="form-group">
                                                 <label>favicon.ico</label>
-                                                <input type="text" class="form-control" id="websiteIcon"
+                                                <input type="text" class="form-control updateWebsite" id="websiteIcon"
                                                        th:value="${configuration.websiteIcon}"
                                                        name="websiteIcon"
                                                        placeholder="favicon.ico">
                                             </div>
                                             <div class="form-group">
                                                 <label>博客打赏</label>
-                                                <input type="text" class="form-control" id="appreciation"
+                                                <input type="text" class="form-control updateWebsite" id="appreciation"
                                                        th:value="${configuration.appreciation}"
                                                        name="appreciation"
                                                        placeholder="博客打赏">
                                             </div>
                                             <div class="form-group">
                                                 <label>站点描述</label>
-                                                <textarea type="text" class="form-control" id="websiteDescription"
+                                                <textarea type="text" class="form-control updateWebsite"
+                                                          id="websiteDescription"
                                                           name="websiteDescription"
                                                           th:text="${configuration.websiteDescription}"
                                                           placeholder="站点描述"></textarea>
@@ -74,45 +75,47 @@
                             <div class="col-md-4">
                                 <div class="card card-primary card-outline">
                                     <div class="card-header">
-                                        <h3 class="card-title">个人信息</h3>
+                                        <h3 class="card-title user">个人信息</h3>
                                     </div> <!-- /.card-body -->
                                     <div class="card-body">
                                         <form role="form" id="userInfoForm">
                                             <!-- input states -->
                                             <div class="form-group">
-                                                <label class="control-label">个人头像</label>
-                                                <input type="text" class="form-control" id="yourAvatar"
+                                                <label class="control-label ">个人头像</label>
+                                                <input type="text" class="form-control updateUser" id="yourAvatar"
                                                        name="yourAvatar" th:value="${configuration.yourAvatar}"
                                                        placeholder="个人头像">
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label">个人名称</label>
+                                                <label class="control-label updateUser">个人名称</label>
                                                 <input type="text" class="form-control" id="yourName"
                                                        name="yourName" th:value="${configuration.yourName}"
                                                        placeholder="个人名称">
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label">个人邮箱</label>
-                                                <input type="email" class="form-control" id="yourEmail" name="yourEmail"
+                                                <label class="control-label ">个人邮箱</label>
+                                                <input type="email" class="form-control updateUser" id="yourEmail"
+                                                       name="yourEmail"
                                                        th:value="${configuration.yourEmail}"
                                                        placeholder="个人邮箱">
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label">个人QQ</label>
-                                                <input type="email" class="form-control" id="qq" name="qq"
+                                                <label class="control-label ">个人QQ</label>
+                                                <input type="email" class="form-control updateUser" id="qq" name="qq"
                                                        th:value="${configuration.qq}"
                                                        placeholder="个人QQ">
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">个人二维码</label>
-                                                <input type="text" class="form-control" id="personalQrCode"
+                                                <input type="text" class="form-control updateUser" id="personalQrCode"
                                                        name="personalQrCode"
                                                        th:value="${configuration.personalQrCode}"
                                                        placeholder="个人二维码">
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">个人描述</label>
-                                                <textarea type="" class="form-control" id="personalDescription"
+                                                <textarea type="" class="form-control updateUser"
+                                                          id="personalDescription"
                                                           name="personalDescription"
                                                           th:text="${configuration.personalDescription}"
                                                           placeholder="个人描述"></textarea>
@@ -136,34 +139,37 @@
                                             <!-- input states -->
                                             <div class="form-group">
                                                 <label class="control-label">底部About</label>
-                                                <input type="text" class="form-control" id="footerAbout"
+                                                <input type="text" class="form-control updateFooter" id="footerAbout"
                                                        name="footerAbout"
                                                        th:value="${configuration.footerAbout}"
                                                        placeholder="About">
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">底部备案号</label>
-                                                <input type="text" class="form-control" id="footerICP" name="footerICP"
+                                                <input type="text" class="form-control updateFooter" id="footerICP"
+                                                       name="footerICP"
                                                        th:value="${configuration.footerICP}"
                                                        placeholder="备案号">
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label">底部Copy Right</label>
+                                                <label class="control-label ">底部Copy Right</label>
                                                 <input type="text" class="form-control" id="footerCopyRight"
                                                        name="footerCopyRight"
                                                        th:value="${configuration.footerCopyRight}"
                                                        placeholder="Copy Right">
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label">底部Powered By</label>
-                                                <input type="text" class="form-control" id="footerPoweredBy"
+                                                <label class="control-label ">底部Powered By</label>
+                                                <input type="text" class="form-control updateFooter"
+                                                       id="footerPoweredBy"
                                                        name="footerPoweredBy"
                                                        th:value="${configuration.footerPoweredBy}"
                                                        placeholder="Powered By">
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label">底部Powered By URL</label>
-                                                <input type="text" class="form-control" id="footerPoweredByURL"
+                                                <label class="control-label ">底部Powered By URL</label>
+                                                <input type="text" class="form-control updateFooter"
+                                                       id="footerPoweredByURL"
                                                        name="footerPoweredByURL"
                                                        th:value="${configuration.footerPoweredByURL}"
                                                        placeholder="Powered By URL">

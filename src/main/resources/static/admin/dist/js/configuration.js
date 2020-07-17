@@ -1,4 +1,9 @@
 $(function () {
+    //站点信息文本变更时，修改提交标签
+    $('.updateWebsite').change(function () {
+        $("#updateWebsiteButton").attr("disabled", false);
+    });
+
     //修改站点信息
     $('#updateWebsiteButton').click(function () {
         $("#updateWebsiteButton").attr("disabled", true);
@@ -28,6 +33,11 @@ $(function () {
         });
     });
     //个人信息
+    $('.updateUser').change(function () {
+        $("#updateUserInfoButton").attr("disabled", false);
+    });
+
+
     $('#updateUserInfoButton').click(function () {
         $("#updateUserInfoButton").attr("disabled", true);
         var params = $("#userInfoForm").serialize();
@@ -54,7 +64,11 @@ $(function () {
             }
         });
     });
+
     //修改底部设置
+    $('.updateFooter').change(function () {
+        $("#updateFooterButton").attr("disabled", false);
+    });
     $('#updateFooterButton').click(function () {
         $("#updateFooterButton").attr("disabled", true);
         var params = $("#footerForm").serialize();

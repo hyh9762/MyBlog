@@ -520,7 +520,8 @@ h5,h6{font-size:1em;}
                             </ui>
                         </div>
                         <div class="five wide column">
-                            <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" alt=""
+                            <img src="../static/images/wechat.jpg" th:src="${session.configuration.personalQrCode}"
+                                 alt=""
                                  class="ui right floated rounded bordered image" style="width: 110px">
                         </div>
                     </div>
