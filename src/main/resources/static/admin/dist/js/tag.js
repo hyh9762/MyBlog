@@ -5,7 +5,14 @@ $(function () {
         colModel: [
             {label: 'id', name: 'id', indeinx: 'id', width: 50, key: true, hidden: true},
             {label: '标签名称', name: 'name', index: 'name', width: 240},
-            {label: '添加时间', name: 'createTime', index: 'createTime', width: 120}
+            {
+                label: '添加时间',
+                name: 'createdTime',
+                index: 'createdTime',
+                width: 90,
+                formatter: 'date',
+                formatoptions: {srcformat: 'Y-m-d H:i', newformat: 'Y-m-d H:i'}
+            }
         ],
         height: 560,
         rowNum: 10,

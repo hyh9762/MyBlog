@@ -6,7 +6,14 @@ $(function () {
             {label: 'id', name: 'id', index: 'id', width: 50, key: true, hidden: true},
             {label: '分类名称', name: 'name', index: 'name', width: 240},
             {label: '分类图标', name: 'icon', index: 'icon', width: 120, formatter: imgFormatter},
-            {label: '添加时间', name: 'createTime', index: 'createTime', width: 120}
+            {
+                label: '添加时间',
+                name: 'createdTime',
+                index: 'createdTime',
+                width: 90,
+                formatter: 'date',
+                formatoptions: {srcformat: 'Y-m-d H:i', newformat: 'Y-m-d H:i'}
+            }
         ],
         height: 560,
         rowNum: 10,

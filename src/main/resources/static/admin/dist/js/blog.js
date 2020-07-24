@@ -11,8 +11,8 @@ $(function () {
             {label: '博客分类', name: 'type.name', index: 'type.name', width: 60},
             {
                 label: '添加时间',
-                name: 'createTime',
-                index: 'createTime',
+                name: 'createdTime',
+                index: 'createdTime',
                 width: 90,
                 formatter: 'date',
                 formatoptions: {srcformat: 'Y-m-d H:i', newformat: 'Y-m-d H:i'}
