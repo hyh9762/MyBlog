@@ -23,3 +23,6 @@
 hs_err_pid*
 /.idea/
 /src/test/
+/src/main/resources/application-dev.yml
+/src/main/resources/application-pro.yml
+/src/main/resources/application.yml
