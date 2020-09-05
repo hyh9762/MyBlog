@@ -145,14 +145,14 @@
                                             <label class="control-label">文章标识:&nbsp;</label>
                                             <label for="original"><input name="flag" type="radio" id="original"
                                                                          checked=true
-                                                                         th:checked="${null==blog||(null !=blog and null !=blog.published and blog.published==true)} ?true:false"
-                                                                         value="true"/>原创</label>
+                                                                         th:checked="${null==blog||(null !=blog and null !=blog.flag and blog.flag=='原创')} ?true:false"
+                                                                         value="原创"/>原创</label>
                                             <input name="flag" type="radio" id="reproduction" value="转载"
-                                                   th:checked="${null !=blog and null !=blog.published and blog.published==false} ?true:false"/><label
+                                                   th:checked="${null==blog||(null !=blog and null !=blog.flag and blog.flag=='转载')} ?true:false"/><label
                                                 for="reproduction">&nbsp;转载&nbsp;</label>
                                             <input name="flag" type="radio" id="translation"
                                                    checked=true
-                                                   th:checked="${null==blog||(null !=blog and null !=blog.published and blog.published==true)} ?true:false"
+                                                   th:checked="${null==blog||(null !=blog and null !=blog.flag and blog.flag=='翻译')} ?true:false"
                                                    value="翻译"/><label for="translation">&nbsp;翻译</label>
                                         </div>
                                         <div class="form-group">
